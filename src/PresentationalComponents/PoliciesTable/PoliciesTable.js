@@ -68,7 +68,7 @@ export const PoliciesTable = ({ policies, location, history }) => {
         },
         manageColumns: manageColumnsEnabled,
       }}
-      actionResolver={actionResolver}
+      actionResolver={policies.length > 0 ? actionResolver : undefined}
     />
   );
 };
