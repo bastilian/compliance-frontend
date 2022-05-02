@@ -61,6 +61,8 @@ if (LOCAL_REMEDIATIONS) {
     routes[`/api/remediations/`] = { host: `http://${REMEDIATIONS_HOST}:${REMEDIATIONS_PORT}` };
 }
 
+routes['/config/chrome/insights-navigation.json'] =  { host: 'http://localhost:3000' };
+
 const esi = {
     // Increases the default (2s) timeout which can be a pain sometimes.
     // https://github.com/Schibsted-Tech-Polska/good-guy-http/blob/master/lib/index.js#L55

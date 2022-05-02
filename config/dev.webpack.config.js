@@ -80,6 +80,11 @@ const { config: webpackConfig, plugins } = (() => {
     debug: withDefault('WEBPACK_DEBUG') === 'true',
     useFileHash: false,
     ...(withDefault('PROXY') ? webpackProxy : insightsProxy),
+    routes: {
+      '/config/chrome/insights-navigation.json': { host: 'http://localhost:3000' }
+      // Additional routes to the spandx config
+      // '/beta/config': { host: 'http://localhost:8003' }, // for local CSC config
+    },
   };
 
   console.log('Configuration provided', initConfig);
