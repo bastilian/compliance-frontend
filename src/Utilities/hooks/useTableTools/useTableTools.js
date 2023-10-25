@@ -121,6 +121,7 @@ const useTableTools = (items = [], columns = [], options = {}) => {
     managedColumns,
     options
   );
+  const { activeRefreshCheck } = useActiveRefresh(options);
 
   const {
     toolbarProps: rowBuilderToolbarProps,
@@ -143,6 +144,7 @@ const useTableTools = (items = [], columns = [], options = {}) => {
     showTreeTable,
     onCollapse: expandableProps?.onCollapse,
     openItems,
+    activeRefreshCheck,
   });
 
   const toolbarProps = {

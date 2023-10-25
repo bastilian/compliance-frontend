@@ -31,16 +31,24 @@ const primeItem = (item, transformers) => {
 const applyTransformers = (items, transformers = []) =>
   items.map((item) => primeItem(item, transformers));
 
-const buildRow = (item, columns, rowTransformer, idx) =>
+const buildRow = (item, columns, rowTransformer, activeRefreshCheck, idx) =>
   rowTransformer.flatMap((transformer) => {
     const row = itemRow(item, columns);
+    activeRefreshCheck(item);
     return transformer ? transformer(row, item, columns, idx) : row;
   });
 
-const buildRows = (paginatedItems, columns, rowTransformer) =>
+const buildRows = (
+  paginatedItems,
+  columns,
+  rowTransformer,
+  activeRefreshCheck
+) =>
   paginatedItems.length > 0
     ? paginatedItems
-        .flatMap((item, idx) => buildRow(item, columns, rowTransformer, idx))
+        .flatMap((item, idx) =>
+          buildRow(item, columns, rowTransformer, activeRefreshCheck, idx)
+        )
         .filter((v) => !!v)
     : [];
 
@@ -58,6 +66,7 @@ const useRowsBuilder = (items, columns, options = {}) => {
     showTreeTable,
     onCollapse,
     openItems,
+    activeRefreshCheck,
   } = options;
   const EmptyRowsComponent = options.emptyRows || emptyRows;
 
@@ -99,7 +108,12 @@ const useRowsBuilder = (items, columns, options = {}) => {
                     .map(([, value]) => value)
                     .filter((v) => !!v)
               )
-            : buildRows(paginatedItems, columns, rowTransformer);
+            : buildRows(
+                paginatedItems,
+                columns,
+                rowTransformer,
+                activeRefreshCheck
+              );
         })();
   }, [
     sortedItems,

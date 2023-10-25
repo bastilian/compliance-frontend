@@ -45,6 +45,10 @@ const ReportsTable = ({ profiles }) => {
           columns: exportableColumns,
         },
         emptyRows: emptyRows('reports', columns.length),
+        activeRefreshCheck: (item) => item.status === 'Running',
+        onActiveRefresh: () => {
+          setTimeout;
+        },
       }}
       className={'reports-table'}
     />
