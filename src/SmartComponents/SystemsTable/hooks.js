@@ -90,6 +90,15 @@ const buildApiFilters = (filters = {}, ignoreOsMajorVersion) => {
   };
 };
 
+const prepareEntitiesForInventory = (entities, selected) =>
+  entities?.map((entity) => {
+    return {
+      ...entity,
+      selected: (selected || []).map((id) => id).includes(entity.id),
+      per_reporter_staleness: entity.last_check_in,
+    };
+  });
+
 export const useGetEntities = (
   fetchEntities,
   { selected, columns, ignoreOsMajorVersion } = {}
@@ -126,11 +135,7 @@ export const useGetEntities = (
     } = fetchedEntities || {};
 
     return {
-      results:
-        entities?.map((entity) => ({
-          ...entity,
-          selected: (selected || []).map((id) => id).includes(entity.id),
-        })) || [],
+      results: prepareEntitiesForInventory(entities, selected) || [],
       orderBy,
       orderDirection,
       total: totalCount,
